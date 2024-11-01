@@ -1,27 +1,14 @@
-import type { Component } from 'solid-js';
+import { createSignal } from "solid-js";
+import { Button } from "./components/ui/button";
+import { useStore } from "./store/store";
 
-import logo from './logo.svg';
-import styles from './App.module.css';
+export default function App() {
+  const [_, { selectFolder, startWatching }] = useStore();
 
-const App: Component = () => {
   return (
-    <div class={styles.App}>
-      <header class={styles.header}>
-        <img src={logo} class={styles.logo} alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          class={styles.link}
-          href="https://github.com/solidjs/solid"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn Solid
-        </a>
-      </header>
+    <div class="flex justify-center h-screen">
+      <Button onClick={selectFolder}>Select Folder</Button>
+      <Button onClick={startWatching}>Watch</Button>
     </div>
   );
-};
-
-export default App;
+}
