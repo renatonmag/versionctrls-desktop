@@ -51,16 +51,16 @@ func (r *Repository) Clone(url string, isBare bool, o *git.CloneOptions) (*Repos
 	return r, nil
 }
 
-func (r *Repository) Open(path string) (*Repository, error) {
+func (r *Repository) Open() (*Repository, error) {
 	var err error
-	r.Repo, err = git.PlainOpen(path)
+	r.Repo, err = git.PlainOpen(r.Path)
 	if err != nil {
 		return nil, err
 	}
 	return r, nil
 }
 
-func (r *Repository) HasIntegration(path string) bool {
+func (r *Repository) HasIntegration() bool {
 	// Get the worktree
 	wt, err := r.Repo.Worktree()
 	if err != nil {

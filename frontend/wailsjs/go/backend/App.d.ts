@@ -9,3 +9,5 @@ export function Greet(arg1:string):Promise<string>;
 export function SelectFolder():Promise<string>;
 
 export function StartWatcher(arg1:string):Promise<void>;
+
+export function VerifyIntegration(arg1:string):Promise<boolean>;

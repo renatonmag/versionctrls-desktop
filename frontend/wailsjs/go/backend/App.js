@@ -17,3 +17,7 @@ export function SelectFolder() {
 export function StartWatcher(arg1) {
   return window['go']['backend']['App']['StartWatcher'](arg1);
 }
+
+export function VerifyIntegration(arg1) {
+  return window['go']['backend']['App']['VerifyIntegration'](arg1);
+}

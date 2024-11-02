@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"time"
+	"versionctrls-desktop/internal/git"
 
 	"github.com/radovskyb/watcher"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
@@ -89,4 +90,8 @@ func (a *App) SelectFolder() string {
 	return path
 }
 
-// func (a *App) StartWatcher(entry string) error {}
+func (a *App) VerifyIntegration(entry string) bool {
+	repo := git.NewRepository(entry)
+	repo.Open()
+	return repo.HasIntegration()
+}

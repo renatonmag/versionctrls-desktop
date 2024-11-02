@@ -1,4 +1,8 @@
-import { SelectFolder, StartWatcher } from "../../wailsjs/go/backend/App";
+import {
+  SelectFolder,
+  StartWatcher,
+  VerifyIntegration,
+} from "../../wailsjs/go/backend/App";
 
 export const createUtils = (state, actions, setState) => {
   Object.assign(actions, {
@@ -10,6 +14,10 @@ export const createUtils = (state, actions, setState) => {
     startWatching: () => {
       console.log("startWatching");
       StartWatcher(state.folderPath);
+    },
+    verifyIntegration: async () => {
+      const result = await VerifyIntegration(state.folderPath);
+      console.log(result);
     },
   });
 };
