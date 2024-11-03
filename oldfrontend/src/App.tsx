@@ -11,47 +11,8 @@ export default function App() {
   // onMount(() => {
   //   loadRepos();
   // });
-  const routes = [
-    {
-      path: "/",
-      component: Repositories,
-    },
-    {
-      path: "/hello-world",
-      component: () => <h1>Hello, World!</h1>,
-    },
-    {
-      path: "/about",
-      component: Repository,
-    },
-  ];
 
-  const history = createMemoryHistory();
-
-  const toHome = () => {
-    history.set({ value: "/" });
-  };
-  const toAbout = () => {
-    history.set({ value: "/about" });
-  };
-
-  return (
-    <>
-      <button onClick={toHome}>{'"/"'}</button>
-      <button onClick={toAbout}>{'"/about"'}</button>
-
-      <MemoryRouter
-        history={history}
-        root={(props) => (
-          <StoreProvider>
-            <Suspense>{props.children}</Suspense>
-          </StoreProvider>
-        )}
-      >
-        {routes}
-      </MemoryRouter>
-    </>
-  );
+  return <Repositories />;
 }
 
 const Root = (props) => (
