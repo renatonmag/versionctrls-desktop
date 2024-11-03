@@ -1,6 +1,12 @@
 package git
 
-import "github.com/go-git/go-git/v5"
+import (
+	"fmt"
+	"path/filepath"
+	"versionctrls-desktop/internal/store"
+
+	"github.com/go-git/go-git/v5"
+)
 
 // RepositoryManager handles multiple git repositories
 type RepositoryManager struct {
@@ -14,9 +20,32 @@ func NewRepositoryManager() *RepositoryManager {
 	}
 }
 
+func (rm *RepositoryManager) Exists(path string) bool {
+	_, ok := rm.repositories[path]
+	return ok
+}
+
+func (rm *RepositoryManager) LoadFromDisk(store *store.Store) error {
+	for _, path := range store.GetRepoPaths() {
+		err := rm.Add(path)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 // AddRepository adds a repository to the manager
-func (rm *RepositoryManager) Add(path string, repo *Repository) {
+func (rm *RepositoryManager) Add(path string) error {
+	repo := NewRepository(path)
+	repo, err := repo.Open()
+	if err != nil {
+		fmt.Println("Error opening repository:", err)
+		return fmt.Errorf("error opening repository. might not be a valid repository")
+	}
 	rm.repositories[path] = repo
+	return nil
 }
 
 // DeleteRepository removes a repository from the manager
@@ -28,6 +57,26 @@ func (rm *RepositoryManager) Delete(path string) {
 func (rm *RepositoryManager) Get(path string) (*Repository, bool) {
 	repo, exists := rm.repositories[path]
 	return repo, exists
+}
+
+func (rm *RepositoryManager) GetAll() map[string]*Repository {
+	return rm.repositories
+}
+
+type RepositoryInfo struct {
+	Path string
+	Name string
+}
+
+func (rm *RepositoryManager) ListPaths() []RepositoryInfo {
+	infos := make([]RepositoryInfo, 0, len(rm.repositories))
+	for k := range rm.repositories {
+		infos = append(infos, RepositoryInfo{
+			Path: k,
+			Name: filepath.Base(k),
+		})
+	}
+	return infos
 }
 
 type Repository struct {
@@ -81,4 +130,9 @@ func (r *Repository) HasIntegration() bool {
 	}
 
 	return false
+}
+
+func (r *Repository) IsRepository() bool {
+	_, err := git.PlainOpen(r.Path)
+	return err == nil
 }

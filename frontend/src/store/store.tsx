@@ -1,11 +1,15 @@
 import { createContext, useContext, ParentComponent } from "solid-js";
 import { createStore } from "solid-js/store";
-import { createUtils } from "./createUtils";
+import { createGit } from "./createGit";
 
 // Define the store state type
 type StoreState = {
   // Add your state properties here
   count: number;
+  openedRepos: {
+    path: string;
+    name: string;
+  }[];
   // ... other state properties
 };
 
@@ -16,11 +20,11 @@ const StoreContext = createContext<[StoreState, any]>();
 export const StoreProvider: ParentComponent = (props) => {
   const [state, setState] = createStore<StoreState>({
     count: 0,
-    folderPath: "",
+    openedRepos: [],
   });
   const actions = {};
   const store = [state, actions];
-  createUtils(state, actions, setState);
+  createGit(state, actions, setState);
 
   return (
     <StoreContext.Provider value={store}>

@@ -6,6 +6,7 @@ import (
 
 	"versionctrls-desktop/backend"
 
+	"github.com/joho/godotenv"
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/logger"
 	"github.com/wailsapp/wails/v2/pkg/options"
@@ -16,15 +17,16 @@ import (
 //go:embed frontend/dist
 var assets embed.FS
 
-//go:embed frontend/node_modules/geist/dist/fonts
-var fonts embed.FS
-
 func main() {
+	err := godotenv.Load(".env.dev.local")
+	if err != nil {
+		log.Fatalf("Error loading .env.dev.local file")
+	}
 	// Create an instance of the app structure
 	app := backend.NewApp()
 
 	// Create application with options
-	err := wails.Run(&options.App{
+	err = wails.Run(&options.App{
 		Title:             "versionctrls-desktop",
 		Width:             1024,
 		Height:            768,

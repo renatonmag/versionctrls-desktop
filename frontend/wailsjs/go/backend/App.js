@@ -6,16 +6,20 @@ export function DomReady(arg1) {
   return window['go']['backend']['App']['DomReady'](arg1);
 }
 
-export function Greet(arg1) {
-  return window['go']['backend']['App']['Greet'](arg1);
+export function ListRepos() {
+  return window['go']['backend']['App']['ListRepos']();
 }
 
-export function SelectFolder() {
-  return window['go']['backend']['App']['SelectFolder']();
+export function OpenRepository() {
+  return window['go']['backend']['App']['OpenRepository']();
 }
 
-export function StartWatcher(arg1) {
-  return window['go']['backend']['App']['StartWatcher'](arg1);
+export function RemoveRepository(arg1) {
+  return window['go']['backend']['App']['RemoveRepository'](arg1);
+}
+
+export function ToggleWatcher(arg1, arg2) {
+  return window['go']['backend']['App']['ToggleWatcher'](arg1, arg2);
 }
 
 export function VerifyIntegration(arg1) {

@@ -6,6 +6,7 @@ toolchain go1.23.1
 
 require (
 	github.com/go-git/go-git/v5 v5.11.0
+	github.com/joho/godotenv v1.5.1
 	github.com/radovskyb/watcher v1.0.7
 	github.com/schollz/jsonstore v1.1.0
 	github.com/wailsapp/wails/v2 v2.9.2
